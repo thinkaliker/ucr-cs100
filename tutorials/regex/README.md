@@ -16,7 +16,7 @@ Regex is a short pattern of letters and symbols which has can match certain stri
 Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instance of that character. There are a few extra symbols which do not follow this rule but we'll get to that in a bit.
 
 > ###Example
-> `a` will match <pre>c<b>a</b>t</pre> and <pre>p<b>a</b>tch</pre> but not `dog`
+> `a` will match <code>c<b>a</b>t</code> and <code>p<b>a</b>tch</code> but not <code>dog</code>
 
 ###2. Special characters aka Metacharacters
 
