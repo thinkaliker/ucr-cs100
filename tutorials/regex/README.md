@@ -23,25 +23,39 @@ Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instan
 These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
 
 > ###Example
+>
 > Match: ?
+>
 > String: Are you a hacker?
+>
 > Use: \?
+>
 > Result: Are you a hacker`?`
 
 Here are all the metacharacters: `\`, `^`, `$`, `.`, `|`, `?`, `*`, `+`, `(`, `)`, `[ and ]`, and `{ and }`.
 
 + `\` - The escape character. You'll need it for the next few symbols.
 
+> ###Example
+>
 > Match: \
+>
 > String: C:\Windows
+>
 > Use: \
+>
 > Result: C:`\`Windows
 
 + `^` - The caret. It matches at the beginning of a string or line.
 
+> ###Example
+>
 > Match: First instance of `he`
+>
 > String: `heavyheaded`
+>
 > Use: `^he`
+>
 > Result: `he`avyheaded
 	
 + `$` - The dollar sign. It matches at the end of a string or line.
