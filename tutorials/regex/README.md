@@ -3,7 +3,7 @@
 
 This is a general overview on regular expressions, commonly shortened to "regex".
 
-This tutorial will cover the basics of regex, but more specifically, POSIX regex.
+This tutorial will cover the basics of regex, but more specifically, **POSIX regex**.
 
 But first we'll start with the basics.
 
@@ -11,26 +11,26 @@ But first we'll start with the basics.
 
 Regex is a short pattern of letters and symbols which has can match certain strings.
 
-###1. Basic characters aka Literal characters
+###Basic characters aka Literal characters
 
 Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instance of that character. There are a few extra symbols which do not follow this rule but we'll get to that in a bit.
 
 > ###Example
-> `a` will match "c`a`t" and "p`a`tch" but not "dog"
+>> `a` will match "c`a`t" and "p`a`tch" but not "dog"
 
-###2. Special characters aka Metacharacters
+###Special characters aka Metacharacters
 
 These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
 
 > ###Example
 >
-> Match: ?
->
-> String: Are you a hacker?
->
-> Use: \?
->
-> Result: Are you a hacker`?`
+>>Match: ?
+>>
+>> String: Are you a hacker?
+>>
+>> Use: \?
+>>
+>> Result: Are you a hacker`?`
 
 Here are all the metacharacters: `\`, `^`, `$`, `.`, `|`, `?`, `*`, `+`, `(`, `)`, `[ and ]`, and `{ and }`.
 
@@ -38,25 +38,25 @@ Here are all the metacharacters: `\`, `^`, `$`, `.`, `|`, `?`, `*`, `+`, `(`, `)
 
 > ###Example
 >
-> Match: \
->
-> String: C:\Windows
->
-> Use: \
->
-> Result: C:`\`Windows
+>> Match: \
+>>
+>> String: C:\Windows
+>>
+>> Use: \
+>>
+>> Result: C:`\`Windows
 
 + `^` - The caret. It matches at the beginning of a string or line.
 
 > ###Example
 >
-> Match: First instance of `he`
->
-> String: `heavyheaded`
->
-> Use: `^he`
->
-> Result: `he`avyheaded
+>> Match: First instance of `he`
+>>
+>> String: `heavyheaded`
+>>
+.> Use: `^he`
+>>
+>> Result: `he`avyheaded
 	
 + `$` - The dollar sign. It matches at the end of a string or line.
 
