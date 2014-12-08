@@ -12,9 +12,14 @@ using namespace boost;
 int x = 0, y = 0;
 string regexPattern;
 string replacePattern;
-regex r;
+string hint;
+string prompt;
+
 
 vector<string> lines;
+vector<vector<string>> coloredLines;
+vector<string> replaced;
+vector<vector<string>> captures;
 
 bool extended = false;
 bool global = false;
@@ -122,8 +127,43 @@ void drawScreen()
     if (replaceMode)
         mvaddch(2,54,'X');
     
+
     move(3,0);
+    addstr(hint.c_str());
+    for (int i = 0; i < lines.size(); i++)
+    {
+        int color = 1;
+
+        init_pair(1, COLOR_BLACK, COLOR_GREEN);
+        init_pair(2, COLOR_BLACK, COLOR_BLUE);
+        
+        move(5+i,0);    
+        for (int j = 0; j < coloredLines[i].size(); j++)
+        {
+            if (j%2!=0)
+            {
+                color = 1 - color;
+                attron(COLOR_PAIR(color+1));
+            }
+            addstr(coloredLines[i][j].c_str()); 
+            if (j%2!=0)
+                attroff(COLOR_PAIR(color+1));
+        }
+        move(5+i, 50); 
+        if (replaceMode)
+        {
+            addstr(replaced[i].c_str());
+        }
+    }
+    move(y, x+16);
+}
+
+void performRegex()
+{
+    replaced.clear();
+    hint = "";
     bool valid = true;
+    regex r;
     try
     {  
         if (extended)
@@ -140,16 +180,18 @@ void drawScreen()
     }
     catch (regex_error &e)
     {
-        addstr("Invalid regex!");
         valid = false;
     }
+    if (!valid)
+        hint = "Invalid regex!";
+
     for (int i = 0; i < lines.size(); i++)
     {
-        int color = 1;
-        move(5+i,0);
+        coloredLines[i].clear();
         if (!valid)
         {
-            addstr(lines[i].c_str());
+            replaced.push_back("");
+            coloredLines[i].push_back(lines[i]);
             continue;
         }
         smatch m;
@@ -157,30 +199,21 @@ void drawScreen()
         auto words_begin = sregex_iterator(s.begin(), s.end(), r);
         auto words_end = sregex_iterator();
 
-        init_pair(1, COLOR_BLACK, COLOR_GREEN);
-        init_pair(2, COLOR_BLACK, COLOR_BLUE);
         for (sregex_iterator j = words_begin; j != words_end; j++)
         {
             m = *j;
-            addstr(m.prefix().str().c_str());
-            
-            attron(COLOR_PAIR(color+1));
-            addstr(m.str().c_str());
-            attroff(COLOR_PAIR(color+1));
-            
-            color = 1 - color;
+            coloredLines[i].push_back(m.prefix().str());
+            coloredLines[i].push_back(m.str());
+            if (!global)
+                break;
         }
         if (words_begin == words_end)
-            addstr(s.c_str());
+            coloredLines[i].push_back(s);
         else
-            addstr(m.suffix().str().c_str());
-        move(5+i, 50); 
-        if (replaceMode)
-        {
-            addstr(regex_replace(s,r,replacePattern).c_str());
-        }
+            coloredLines[i].push_back(m.suffix().str());
+
+        replaced.push_back(regex_replace(s,r,replacePattern));
     }
-    move(y, x+16);
 }
 
 void getFile(string s)
@@ -189,13 +222,12 @@ void getFile(string s)
     for (string line; getline(infile, line);) 
     {
         lines.push_back(line);
+        coloredLines.push_back(vector<string>());
     }
 }
 
-int main ()
+void initCurses()
 {
-    int ch=0;
-    getFile("test1");
     initscr();
     start_color();
     use_default_colors();
@@ -203,12 +235,20 @@ int main ()
     noecho();
     mousemask(BUTTON1_PRESSED, NULL);
     keypad(stdscr, TRUE);
-    drawScreen();
+}
+
+
+int main ()
+{
+    int ch = 0;
+    getFile("test1");
+    initCurses();
     while(ch!= 'q')
     {
-        ch = getch();
         keyAction(ch);
+        performRegex();
         drawScreen();
+        ch = getch();
     }
     endwin();
     printf("end\n");
