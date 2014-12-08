@@ -15,48 +15,32 @@ Regex is a short pattern of letters and symbols which has can match certain stri
 
 Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instance of that character. There are a few extra symbols which do not follow this rule but we'll get to that in a bit.
 
-> ###Example
->> `a` will match "c`a`t" and "p`a`tch" but not "dog"
+###Example
+`a` will match "c **_a_** t " and "p **_a_** tch" but not "dog"
 
 ###Special characters aka Metacharacters
 
 These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
 
-> ###Example
->
->>Match: ?
->>
->> String: Are you a hacker?
->>
->> Use: \?
->>
->> Result: Are you a hacker`?`
+Match: `?`    
+String: Are you a hacker?    
+Use: `\?`    
+Result: Are you a hacker **_?_**    
 
 Here are all the metacharacters: `\`, `^`, `$`, `.`, `|`, `?`, `*`, `+`, `(`, `)`, `[ and ]`, and `{ and }`.
-
 + `\` - The escape character. You'll need it for the next few symbols.
 
-> ###Example
->
->> Match: \
->>
->> String: C:\Windows
->>
->> Use: \
->>
->> Result: C:`\`Windows
+Match: `\`    
+String: C:\Windows    
+Use: `\`    
+Result: C: **_\_** Windows    
 
 + `^` - The caret. It matches at the beginning of a string or line.
 
-> ###Example
->
->> Match: First instance of `he`
->>
->> String: `heavyheaded`
->>
-.> Use: `^he`
->>
->> Result: `he`avyheaded
+Match: First instance of `he`    
+String: heavyheaded    
+Use: `^he`    
+Result: **_he_**avyheaded    
 	
 + `$` - The dollar sign. It matches at the end of a string or line.
 
