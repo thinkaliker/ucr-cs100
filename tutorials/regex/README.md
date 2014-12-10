@@ -5,8 +5,7 @@ This is a general overview on regular expressions, commonly shortened to "regex"
 
 This tutorial will cover the basics of regex, but more specifically, **POSIX regex**.
 
-But first we'll start with the basics.
-
+<a name="top"/>
 ##Table of Contents
 [1. What is it?](#what)    
 [2. Basic characters/Literal characters](#literal)    
@@ -16,20 +15,24 @@ But first we'll start with the basics.
 [6. Additional resources](#resources)    
 
 <a name="what"/>
-###What is it?
+###What is Regex?
 
-Regex is a short pattern of letters and symbols which has can match certain strings.
+Regex is a short pattern of letters and symbols which has can match certain strings. Depending on the environment these strings are parsed in, you can match multiple instances or a single instance of a pattern. Regular regex returns the **first** matching string that it finds. Regex is most commonly used for searching and replacing string patterns, and while this may not be the only use, it is very powerful because of the syntax behind regex.
+
+[Back to table of contents](#top)
 
 <a name="literal"/>
-###Basic characters aka Literal characters
+###Basic Characters aka Literal Characters
 
 Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instance of that character. There are a few extra symbols which do not follow this rule but we'll get to that in a bit.
 
 ####Example
 `a` will match "c **_a_** t " and "p **_a_** tch" but not "dog"
 
+[Back to table of contents](#top)
+
 <a name="meta"/>
-###Special characters aka Metacharacters
+###Special Characters aka Metacharacters
 
 These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
 
@@ -128,6 +131,8 @@ String: reallylegitpicture.png
 Use: `^(.+)\.png$`     
 Result: Captured: **_reallylegitpicture_**     
 
+[Back to table of contents](#top)
+
 <a name="escaped"/>
 ###Table of Escaped Literals
 
@@ -142,15 +147,22 @@ Symbol | Explaination
  `\w`  |  Any alphanumeric character
  `\W`  |  Any **non**-alphanumeric character
 
+[Back to table of contents](#top)
+
 <a name="posix"/>
-##POSIX Specific items
+##POSIX Specific Syntax
 
 There are a few key differences  POSIX standard says that the **longest** match is returned. Normal regex usually stops with the **first** match found.
 
+Additionally, every metacharacter except `?` and `+` require escaping  with `\` for use as a metacharacter (`+` and `?` are not part of POSIX standards). Without escaping, those metacharacters are interpreted literally.
+
+[Back to table of contents](#top)
 
 <a name="resources"/>
 ##Additional Resources
-http://regexone.ocm is an excellent learning tool.    
+http://regexone.com is an excellent learning tool which provides an interactive tutorial which walks through the basics of regex.    
 http://www.regular-expressions.info has many pages dedicated to both quickly learning regex and POSIX specific regex.
+
+[Back to table of contents](#top)
 
 ----------------------------------
