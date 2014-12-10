@@ -1,0 +1,29 @@
+--prompt
+Match abc. Capture a
+--line
+abc
+abcdef
+123abc
+123abc456
+ abc 
+today
+goodbye
+abacus
+--capture
+abc
+abc
+abc
+abc
+abc
+
+
+
+--1
+a
+a
+a
+a
+a
+
+
+

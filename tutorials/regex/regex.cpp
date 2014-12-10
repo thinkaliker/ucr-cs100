@@ -15,11 +15,14 @@ string replacePattern;
 string hint;
 string prompt;
 
-
 vector<string> lines;
 vector<vector<string>> coloredLines;
 vector<string> replaced;
 vector<vector<string>> captures;
+vector<int> caplen;
+
+vector<vector<string>> captureSolutions;
+vector<string> replaceSolutions;
 
 bool extended = false;
 bool global = false;
@@ -34,8 +37,8 @@ void mouseAction(int mx, int my)
             extended = !extended;
         else if (mx > 22 && mx < 36)
             global = !global;
-        else if (mx > 38 && mx < 57)
-            replaceMode = !replaceMode;
+        //else if (mx > 38 && mx < 57)
+        //    replaceMode = !replaceMode;
     }
     else if (my == 0)
     {
@@ -106,6 +109,54 @@ void keyAction( int ch )
     }
 }
 
+bool checkSolution()
+{
+    if (replaceMode)
+    {
+        if (replaced.size() != replaceSolutions.size())
+            return false;
+        for (int i = 0; i < replaced.size(); i++)
+        {
+            if (replaced[i] != replaceSolutions[i])
+            {
+                hint = "Check number ";
+                hint += to_string(i+1);
+                hint += "  Expected \"" + replaceSolutions[i] + "\"";
+                hint += " got \"" + replaced[i] + "\"";
+                return false;
+            }
+        }
+        return true;
+    }
+    else
+    {
+        if (captureSolutions.size() != captures.size())
+            return false;
+        for (int i = 0; i < captureSolutions.size(); i++)
+        {
+            while (captureSolutions[i].size() > captures[i].size())
+            {
+                captures[i].push_back("");
+            }
+            for (int j = 0; j < captureSolutions[i].size(); j++)
+            {
+                if (captureSolutions[i][j] != captures[i][j])
+                {
+                    hint = "Check number ";
+                    hint += to_string(i+1);
+                    hint += ", Capture \\";
+                    hint += to_string(j);
+                    hint += "  ";
+                    hint += "Expected \"" +captureSolutions[i][j]+"\" ";
+                    hint += "got \"" + captures[i][j] +"\"";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
 void drawScreen()
 {
     clear();
@@ -128,16 +179,24 @@ void drawScreen()
         mvaddch(2,54,'X');
     
 
-    move(3,0);
-    addstr(hint.c_str());
+    move(4,0);
+    addstr("HINT:  ");
+    if (!checkSolution())
+        addstr(hint.c_str());
+    else
+        addstr("CORRECT! Press any key to continue");
+    move(5,0);
+    addstr("TASK:  ");
+    addstr(prompt.c_str());
     for (int i = 0; i < lines.size(); i++)
     {
         int color = 1;
-
+        
         init_pair(1, COLOR_BLACK, COLOR_GREEN);
         init_pair(2, COLOR_BLACK, COLOR_BLUE);
-        
-        move(5+i,0);    
+        move(7,0);
+        addstr("Text:");
+        move(8+i,0);    
         for (int j = 0; j < coloredLines[i].size(); j++)
         {
             if (j%2!=0)
@@ -149,10 +208,33 @@ void drawScreen()
             if (j%2!=0)
                 attroff(COLOR_PAIR(color+1));
         }
-        move(5+i, 50); 
         if (replaceMode)
         {
+            move(7,50);
+            addstr("Replaced String:");
+            move(8+i, 50); 
             addstr(replaced[i].c_str());
+        }
+        else
+        {
+            int loc = 50;
+            move(6,loc);
+            addstr("Captured String:");
+            for (int j = 0; j < caplen.size() && j < 9; j++)
+            {
+                move (7, loc);
+                addstr("\\");
+                addch(j+'0');
+                loc += caplen[j];
+            }
+            
+            loc = 50;
+            for (int j = 0; j < captures[i].size(); j++)
+            {
+                move(8+i, loc); 
+                addstr(captures[i][j].c_str());
+                loc += caplen[j];
+            }
         }
     }
     move(y, x+16);
@@ -161,6 +243,8 @@ void drawScreen()
 void performRegex()
 {
     replaced.clear();
+    caplen.clear();
+    caplen.push_back(5);
     hint = "";
     bool valid = true;
     regex r;
@@ -188,6 +272,7 @@ void performRegex()
     for (int i = 0; i < lines.size(); i++)
     {
         coloredLines[i].clear();
+        captures[i].clear();
         if (!valid)
         {
             replaced.push_back("");
@@ -212,6 +297,19 @@ void performRegex()
         else
             coloredLines[i].push_back(m.suffix().str());
 
+        if (!global && regex_search (s,m,r)) {
+            int numcap = 0;
+            for (auto x:m) 
+            {
+                captures[i].push_back(x.str());
+                if (numcap >= caplen.size())
+                    caplen.push_back(5);
+                if (x.str().length() > caplen[numcap])
+                    caplen[numcap] = x.str().length()+3;
+                numcap++;
+            }
+        }
+
         replaced.push_back(regex_replace(s,r,replacePattern));
     }
 }
@@ -219,12 +317,65 @@ void performRegex()
 void getFile(string s)
 {
     ifstream infile(s);
-    for (string line; getline(infile, line);) 
+    string line;
+    getline(infile,line);
+    
+    lines.clear();
+    coloredLines.clear();
+    captures.clear();
+    replaced.clear();
+    caplen.clear();
+
+    captureSolutions.clear();
+    replaceSolutions.clear();
+    if (line == "--prompt")
     {
-        lines.push_back(line);
-        coloredLines.push_back(vector<string>());
+        string p;
+        getline(infile, p);
+        prompt = p;
+        getline(infile,line);
+    }
+    if (line == "--line")
+    {
+        for (string s; getline(infile,s);)
+        {
+            if (s.length() >= 2 && s[0] == '-' && s[1] == '-')
+            {
+                line = s;
+                break;
+            }
+            lines.push_back(s);
+            coloredLines.push_back(vector<string>());
+            captures.push_back(vector<string>());
+            captureSolutions.push_back(vector<string>());
+        }
+    }
+    if (line == "--capture")
+    {
+        replaceMode = false;
+        string s;
+        int i = 0;
+        while (getline(infile,s))
+        {
+            if (i == lines.size())
+                i = 0;
+            else
+            {
+                captureSolutions[i].push_back(s);
+                i++;
+            }
+        }
+    }
+    else if (line == "--replace")
+    {
+        replaceMode = true;
+        for (string s; getline(infile,s);)
+        {
+            replaceSolutions.push_back(s);
+        }
     }
 }
+
 
 void initCurses()
 {
@@ -240,11 +391,19 @@ void initCurses()
 
 int main ()
 {
+    int level = 1;
     int ch = 0;
-    getFile("test1");
+    getFile("problems/problem" + to_string(level));
     initCurses();
     while(ch!= 'q')
     {
+        if (checkSolution())
+        {
+            if (level == 2)
+                break;
+            level++;
+            getFile("problems/problem" + to_string(level));
+        }
         keyAction(ch);
         performRegex();
         drawScreen();

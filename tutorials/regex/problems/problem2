@@ -1,0 +1,12 @@
+--prompt
+Replace all quotes with "hello".
+--line
+""
+"abc"
+today I said "goodbye" to you
+There "was a mistake" see
+--replace
+"hello"
+"hello"
+today I said "hello" to you
+There "hello" see
