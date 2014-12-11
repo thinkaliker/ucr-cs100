@@ -63,10 +63,10 @@ Here are all the metacharacters:
   </tr>
   <tr>
     <td>
-    <pre><code>\\^$.*[]</code></pre>
+    <pre><code>\^$.*[]</code></pre>
     </td>
     <td>
-    <pre><code>\\^$.|?*+()[]{}</code></pre>
+    <pre><code>\^$.|?*+()[]{}</code></pre>
     </td>
   </tr>
 </table> 
