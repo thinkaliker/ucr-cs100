@@ -27,6 +27,7 @@ vector<string> replaceSolutions;
 bool extended = false;
 bool global = false;
 bool replaceMode = false;
+bool match = false;
 bool finished = false;
 
 void mouseAction(int mx, int my)
@@ -128,7 +129,7 @@ bool checkSolution()
         }
         return true;
     }
-    else
+    else if (!match)
     {
         if (captureSolutions.size() != captures.size())
             return false;
@@ -138,7 +139,7 @@ bool checkSolution()
             {
                 captures[i].push_back("");
             }
-            for (int j = 0; j < captureSolutions[i].size(); j++)
+            for (int j = 1; j < captureSolutions[i].size(); j++)
             {
                 if (captureSolutions[i][j] != captures[i][j])
                 {
@@ -155,6 +156,37 @@ bool checkSolution()
         }
         return true;
     }
+    else
+    {
+        if (captureSolutions.size() != captures.size())
+            return false;
+        for (int i = 0; i < captureSolutions.size(); i++)
+        {
+            if (captureSolutions[i][0] == "")
+            {
+                if (captures[i].size() != 0)
+                {
+                    hint = "Check number ";
+                    hint += to_string(i+1);
+                    hint += ". Be aware of expressions that capture blank strings";
+                    return false;
+                }
+            }
+            else
+            {
+                if (captures[i].size() == 0)
+                {
+                    hint = "Check number ";
+                    hint += to_string(i+1);
+                    hint += ". This should be captured";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+        
 }
 
 void drawScreen()
@@ -350,8 +382,9 @@ void getFile(string s)
             captureSolutions.push_back(vector<string>());
         }
     }
-    if (line == "--capture")
+    if (line == "--capture" || line == "--match")
     {
+        match = line == "--match";
         replaceMode = false;
         string s;
         int i = 0;
@@ -395,11 +428,15 @@ int main ()
     int ch = 0;
     getFile("problems/problem" + to_string(level));
     initCurses();
-    while(ch!= 'q')
+    while(true)
     {
         if (checkSolution())
         {
-            if (level == 2)
+            regexPattern = "";
+            replacePattern = "";
+            x = 0;
+            y = 0;
+            if (level == 10)
                 break;
             level++;
             getFile("problems/problem" + to_string(level));
