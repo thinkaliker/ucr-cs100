@@ -255,6 +255,7 @@ a1a2a3
   <tr>
     <th>Example 1</th>
     <th>Example 2</th>
+    <th>sed Example</th>
   </tr>
   <tr>
     <td>
@@ -266,6 +267,11 @@ cat cat
     <pre><code>$ grep '\(a\(.+\)\)d \1 \2'
 ago ag a OR amend amen men
 <em><strong>ago ag a</em></strong> OR <em><strong>amend amen men</em></strong></code></pre>
+    </td>
+    <td>
+    <pre><code>$ sed 's/"\([^"]*\)"/&lt;\1>/g'
+"head" "body"
+&lt;head> &lt;body></code></pre>
     </td>
   </tr>
 </table>
