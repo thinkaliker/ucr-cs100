@@ -67,6 +67,7 @@ void keyAction( int ch )
             mouseAction(event.x,event.y);
             break;
         case KEY_BACKSPACE:
+        case 127:
             if (y == 0 && x > 0 && regexPattern.length() >= x)
             {
                 regexPattern.erase(regexPattern.begin()+x-1);
@@ -99,7 +100,7 @@ void keyAction( int ch )
                 x = replacePattern.length();
             break;
         default:
-            if (ch >= 32 && ch < 128)
+            if (ch >= 32 && ch < 127)
             {
                 if (y == 0)
                     regexPattern.insert(regexPattern.begin()+x, ch);

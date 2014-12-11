@@ -1,2 +1,2 @@
 all:
-	g++ regex.cpp -lncurses -lboost_regex -std=c++11
+	g++ regex.cpp -lcurses -lboost_regex -ltinfo -std=c++11
