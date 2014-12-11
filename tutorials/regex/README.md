@@ -49,6 +49,20 @@ String: C:\Windows
 Use: `\`    
 Result: C: **_\_** Windows    
 
++ `[ ]` - Indicates a group of characters to match. Adding a `^` in front of the characters indicates not those characters.
+
+Match: Match `pan` and `fan` and `tan` but not `man`, `can` or `dan`    
+String: pan fan tan man can dan    
+Use: `[pft]` OR `[^mcd]`     
+Result: **_pan fan tan_** man can dan    
+
+NOTE: The brackets can use ranges, which is what they are commonly known for.
+
+Match: Match any uppercase letter    
+String: fkjdsklajfKSDFJLKFJDFK    
+Use: `[A-Z]`     
+Result: fkjdsklajf **_KSDFJLKFJDFK_**    
+
 + `^` - The caret matches at the beginning of a string or line.  `$` - The dollar sign matches at the end of a string or line.
 
 Match: First instance of `he`    
@@ -93,20 +107,6 @@ Match: Match `cats` or `dogs`
 String: I like cats and dogs    
 Use: `(cat|dog)`     
 Result: I like **_cat_** s and **_dog_** s    
-
-+ `[ ]` - Indicates a group of characters to match. Adding a `^` in front of the characters indicates not those characters.
-
-Match: Match `pan` and `fan` and `tan` but not `man`, `can` or `dan`    
-String: pan fan tan man can dan    
-Use: `[pft]` OR `[^mcd]`     
-Result: **_pan fan tan_** man can dan    
-
-NOTE: The brackets can use ranges, which is what they are commonly known for.
-
-Match: Match any uppercase letter    
-String: fkjdsklajfKSDFJLKFJDFK    
-Use: `[A-Z]`     
-Result: fkjdsklajf **_KSDFJLKFJDFK_**    
 
 + `{ }` - A specified number of repetitions
 
