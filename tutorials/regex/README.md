@@ -152,7 +152,17 @@ Symbol | Explaination
 <a name="posix"/>
 ##POSIX Specific Syntax
 
-There are a few key differences  POSIX standard says that the **longest** match is returned. Normal regex usually stops with the **first** match found.
+There are a few key differences  POSIX standard says that the **longest** match is returned. Normal regex usually stops with the **first** match found. However, it will still match the **leftmost** result.
+
+Match: GetStatus     
+String: GetStatus Get   
+Use: `Get`     
+Result: **_GetStatus_** Get    
+
+Match: SetStatus     
+String: Set SetStatus   
+Use: `(Set|SetStatus)`     
+Result: Set **_SetStatus_**   
 
 Additionally, every metacharacter except `?` and `+` require escaping  with `\` for use as a metacharacter (`+` and `?` are not part of POSIX standards). Without escaping, those metacharacters are interpreted literally.
 
