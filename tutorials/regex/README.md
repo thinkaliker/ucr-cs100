@@ -66,9 +66,7 @@ Here are all the metacharacters:
     <pre><code>\\^$.*[]</code></pre>
     </td>
     <td>
-    <td>
     <pre><code>\\^$.|?*+()[]{}</code></pre>
-    </td>
     </td>
   </tr>
 </table> 
@@ -204,33 +202,73 @@ today or tomorrow
 
 + `{ }` - A specified number of repetitions
 
-`{n}` - Only matches n repetitions or more
+`{n}` - Matches exactly n repetitions    
+`{n,}` - Matches n or more repetitions    
+`{n, m}` - Matches no more than `m` repetitions but no less than `n` repetitions    
+The brackets must be escaped in standard regex
 
-Match: Match `weeeee` but not `flee`     
-String: weeee flee   
-Use: `e{3}`     
-Result: **_weeee_** flee    
+<table>
+  <tr>
+    <th>Posix</th>
+    <th>Extended Posix</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep 'we\{3\}'
+weee
+<em><strong>weee</em></strong></code></pre>
+    </td>
+    <td>
+    <pre><code>$ egrep 'ya{2,5}y'
+yaaaay
+<em><strong>yaaaay</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
-`{n, m}` - Only matches no more than `m` repetitions but no less than `n` repetitions
++ `(` and `)` - Captures variables and creates character groups.    
+The parenthesis must be escaped in standard regex
 
-Match: Match `weee` but not `leeeee` or `less`     
-String: leeeee weee less   
-Use: `e{2,3}`     
-Result: leeeee **_weee_** less    
+<table>
+  <tr>
+    <th>Example 1</th>
+    <th>Example 2</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '\(.*\)\.jpg'
+Image012.jpg
+<em><strong>Image012.jpg</em></strong>
+#Image012 is in capture group 1</code></pre>
+    </td>
+    <td>
+    <pre><code>$ egrep '(a.)+'
+a1a2a3
+<em><strong>a1a2a3</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
-+ `(` and `)` - Captures variables and creates character groups.
++ `\n` - refers back to the nth capture group. This does not exist in Extended Regex.
 
-Match: Capture only the file name without extension     
-String: reallylegitpicture.png   
-Use: `^(.+)\.png$`     
-Result: Captured: **_reallylegitpicture_**     
-
-+ `\n` - refers back to a previous capture group.
-
-Match: Capture strings with repeats
-String abc abc
-Use: `(...) \1`
-Result: **_abc abc_**
+<table>
+  <tr>
+    <th>Example 1</th>
+    <th>Example 2</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '\(...\) \1'
+cat cat
+<em><strong>abc abc</em></strong></code></pre>
+    </td>
+    <td>
+    <pre><code>$ grep '\(a\(.+\)\)d \1 \2'
+ago ag a OR amend amen men
+<em><strong>ago ag a</em></strong> OR <em><strong>amend amen men</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
 
 [Back to table of contents](#top)
