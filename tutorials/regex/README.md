@@ -36,77 +36,171 @@ Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instan
 
 These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
 
-Match: `?`    
-String: Are you a hacker?    
-Use: `\?`    
-Result: Are you a hacker **_?_**    
+<table>
+  <tr>
+    <th>Example 1</th>
+    <th>Example 2</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '\['
+Array[5]
+Array<strong><em>[</em></strong>5]</code></pre>
+    </td>
+    <td>
+    <pre><code>$ grep '\\'
+C:\Windows
+C:<strong><em>\</em></strong>Windows</code></pre>
+    </td>
+  </tr>
+</table> 
 
-Here are all the metacharacters: `\`, `^`, `$`, `.`, `|`, `?`, `*`, `+`, `(`, `)`, `[ and ]`, and `{ and }`.
+Here are all the metacharacters:
+<table>
+  <tr>
+    <th>Posix</th>
+    <th>Extended Posix</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>\\^$.*[]</code></pre>
+    </td>
+    <td>
+    <td>
+    <pre><code>\\^$.|?*+()[]{}</code></pre>
+    </td>
+    </td>
+  </tr>
+</table> 
 + `\` - The escape character. You'll need it if you want to match the literal character for all of the next few symbols.
-
-Match: `\`    
-String: C:\Windows    
-Use: `\`    
-Result: C: **_\_** Windows    
 
 + `[ ]` - Indicates a group of characters to match. Adding a `^` in front of the characters indicates not those characters.
 
-Match: Match `pan` and `fan` and `tan` but not `man`, `can` or `dan`    
-String: pan fan tan man can dan    
-Use: `[pft]` OR `[^mcd]`     
-Result: **_pan fan tan_** man can dan    
+<table>
+  <tr>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '[pft]a[^rtp]'
+pan fan tan man par tap fat
+<strong><em>pan fan tan</em></strong> man par tap fat</code></pre>
+    </td>
+  </tr>
+</table>  
 
 NOTE: The brackets can use ranges, which is what they are commonly known for.
 
-Match: Match any uppercase letter    
-String: fkjdsklajfKSDFJLKFJDFK    
-Use: `[A-Z]`     
-Result: fkjdsklajf **_KSDFJLKFJDFK_**    
-
-+ `^` - The caret matches at the beginning of a string or line.  `$` - The dollar sign matches at the end of a string or line.
-
-Match: First instance of `he`    
-String: heavyheaded    
-Use: `^he`    
-Result: **_he_**avyheaded    
-	
-Match: Last instance of `cess`    
-String: sucessful success    
-Use: `cess$`    
-Result: sucessful suc **_cess_**    
+<table>
+  <tr>
+    <th>Example 1</th>
+    <th>Example 2</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '[A-Z]'
+abcdefgABCEFG
+abcdefg<strong><em>ABCEFGv</em></strong></code></pre>
+    </td>
+    <td>
+    <pre><code>$ grep '[2-5c-g]'
+012345678abcdefghi
+01<strong><em>2345</em></strong>678ab<strong><em>cdefg</em></strong>hi</code></pre>
+    </td>
+  </tr>
+</table>   
 
 + `.` - The period. Or dot. Matches any character you can think of.
 
-Match: Any character (it matches the first character)    
-String: sample text    
-Use: `.`    
-Result: **_s_** ample text    
+<table>
+  <tr>
+    <th>Example 1</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '.'
+abcDEF123!@#[]
+<strong><em>abcDEF123!@#[]</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
-+ `?` - Indicates an optional character (or group).
++ `^` - The caret matches at the beginning of a string or line.  `$` - The dollar sign matches at the end of a string or line.
 
-Match:  Anything with `and`    
-String: sand    OR    hand    
-Use: `?and`    
-Result: s **_and_**    OR    h **_and_**    
+<table>
+  <tr>
+    <th>Example 1</th>
+    <th>Example 2</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep '^he'
+heavyheaded
+<strong><em>he</em></strong>avyheaded</code></pre>
+    </td>
+    <td>
+    <pre><code>$ grep 'cess$'
+successful success
+successful suc<strong><em>cess</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
 + `*` - Indicates **zero or more repetitions** of a character (or group). `+` - Indicates **one or more repetitions** of a character (or group).
 
-Match: Match `el` or `e`    
-String: shell feet    
-Use: `el*`    
-Result: sh **_el_** l  f **_e_** et   
-	
-Match: Match `is` or `iss`    
-String: this hiss    
-Use: `is+`    
-Result: th **_is_** h **_iss_**    
+<table>
+  <tr>
+    <th>Posix</th>
+    <th>Extended Posix</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep 'el*s'
+shell
+sh<strong><em>ells</em></strong> fe<strong><em>es</em></strong></code></pre>
+    </td>
+    <td>
+    <pre><code>$ egrep 'is+'
+hi this hiss
+hi th<strong><em>is</em></strong> h<strong><em>iss</em></strong></code></pre>
+    </td>
+  </tr>
+</table>
 
-+ `|` - The pipe. Or logical OR. Used inside of `(` and `)`. This is important because without the `|` the parenthesis means something else entirely. (see below)
++ `?` - Indicates an optional character (or group). It is extended posix only. Use `\{0,1\}` in standard posix.
 
-Match: Match `cats` or `dogs`    
-String: I like cats and dogs    
-Use: `(cat|dog)`     
-Result: I like **_cat_** s and **_dog_** s    
+<table>
+  <tr>
+    <th>Extended Posix</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ egrep 'colou?r'
+color colour
+<strong><em>color colour</em></strong></pre>
+    </td>
+  </tr>
+</table>
+
++ `|` - The pipe. Or logical OR. Best used inside of `(` and `)`. You must escape in standard Posix
+<table>
+  <tr>
+    <th>Posix</th>
+    <th>Extended Posix</th>
+  </tr>
+  <tr>
+    <td>
+    <pre><code>$ grep 'cat\|dog'
+I like cats and dogs 
+I like <strong><em>cat</em></strong>s and <strong><em>dog</em></strong>s</code></pre>
+    </td>
+    <td>
+    <pre><code>$ egrep 'to(day|morrow)'
+today or tomorrow
+<strong><em>today</em></strong> or <strong><em>tomorrow</em></strong>
+    </td>
+  </tr>
+</table>
 
 + `{ }` - A specified number of repetitions
 
