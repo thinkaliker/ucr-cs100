@@ -34,7 +34,7 @@ Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instan
 <a name="meta"/>
 ###Special Characters aka Metacharacters
 
-These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\\`, in front of the metacharacter.
+These characters are special and cannot be used to match for that character. However, if you need to match the literal character you need to use an escape character, `\`, in front of the metacharacter.
 
 <table>
   <tr>
