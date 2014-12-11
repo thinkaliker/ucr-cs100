@@ -1,29 +1,18 @@
 --prompt
-Match abc. Capture a
+Literal Strings: Match the lines with the string "abc." in them.
 --line
+abc.
+abc.def
+cout << "abc." << endl
 abc
 abcdef
-123abc
-123abc456
- abc 
-today
-goodbye
+123
 abacus
---capture
-abc
-abc
-abc
-abc
-abc
+--match
+1
+1
+1
 
-
-
---1
-a
-a
-a
-a
-a
 
 
 

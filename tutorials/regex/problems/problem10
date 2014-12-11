@@ -1,0 +1,22 @@
+--prompt
+Real Application 3: replace the function "foo(a) + bar(b, c)" with "foobar(a, c, b) "
+--line
+int main(){
+    cout << (foo(5) + bar("fizz", "buzz"));
+    int a = foo(5);
+    string b = "one";
+    string c = "two";
+    int num = foo(a) + bar(b, "zaa");
+    int var = foo(num) + bar(c, c);
+    cout << (foo(num + var) + bar("", c));
+}
+--replace
+int main(){
+    cout << (foobar(5, "buzz", "fizz"));
+    int a = foo(5);
+    string b = "one";
+    string c = "two";
+    int num = foobar(a, "zaa", b);
+    int var = foobar(num, c, c); 
+    cout << (foobar(num + var, c, ""));
+}
