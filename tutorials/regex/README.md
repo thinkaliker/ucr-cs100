@@ -124,12 +124,20 @@ String: leeeee weee less
 Use: `e{2,3}`     
 Result: leeeee **_weee_** less    
 
-+ `(` and `)` - Captures variables. It isn't used in POSIX regex much.
++ `(` and `)` - Captures variables and creates character groups.
 
 Match: Capture only the file name without extension     
 String: reallylegitpicture.png   
 Use: `^(.+)\.png$`     
 Result: Captured: **_reallylegitpicture_**     
+
++ `\n` - refers back to a previous capture group.
+
+Match: Capture strings with repeats
+String abc abc
+Use: `(...) \1`
+Result: **_abc abc_**
+
 
 [Back to table of contents](#top)
 
@@ -137,6 +145,7 @@ Result: Captured: **_reallylegitpicture_**
 ###Table of Escaped Literals
 
 These are used to indicate special characters or characteristics. These are **case sensitive**.
+Escaped Symbols are only in **Extended Posix**.
 
 Symbol | Explaination
 -------|-------------
