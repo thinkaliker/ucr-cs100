@@ -49,12 +49,11 @@ See also: [Special Characters](http://www.regular-expressions.info/characters.ht
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '\['
-Array[5]
+    <pre><code>$ echo 'Array[5]' | grep '\['
 Array<strong><em>[</em></strong>5]</code></pre>
     </td>
     <td>
-    <pre><code>$ grep '\\'
+    <pre><code>$ echo 'C:\Windows' | grep '\\'
 C:\Windows
 C:<strong><em>\</em></strong>Windows</code></pre>
     </td>
@@ -87,8 +86,7 @@ Here are all the metacharacters:
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '[pft]a[^rtp]'
-pan fan tan man par tap fat
+    <pre><code>$ echo 'pan fan tan man par tap fat' | grep '[pft]a[^rtp]'
 <strong><em>pan fan tan</em></strong> man par tap fat</code></pre>
     </td>
   </tr>
@@ -103,13 +101,11 @@ NOTE: The brackets can use ranges, which is what they are commonly known for.
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '[A-Z]'
-abcdefgABCEFG
-abcdefg<strong><em>ABCEFGv</em></strong></code></pre>
+    <pre><code>$ echo 'abcdefgABCDEFG' | grep '[A-Z]'
+abcdefg<strong><em>ABCDEFG</em></strong></code></pre>
     </td>
     <td>
-    <pre><code>$ grep '[2-5c-g]'
-012345678abcdefghi
+    <pre><code>$ echo '012345678abcdefghi' | grep '[2-5c-g]'
 01<strong><em>2345</em></strong>678ab<strong><em>cdefg</em></strong>hi</code></pre>
     </td>
   </tr>
@@ -126,8 +122,7 @@ See also: [Character classes](http://www.regular-expressions.info/charclass.html
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '.'
-abcDEF123!@#[]
+    <pre><code>$ echo 'abcDEF123!@#[]' | grep '.'
 <strong><em>abcDEF123!@#[]</em></strong></code></pre>
     </td>
   </tr>
@@ -144,13 +139,11 @@ See also: [The dot](http://www.regular-expressions.info/dot.html)
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '^he'
-heavyheaded
+    <pre><code>$ echo 'heavyhanded' | grep '^he'
 <strong><em>he</em></strong>avyheaded</code></pre>
     </td>
     <td>
-    <pre><code>$ grep 'cess$'
-successful success
+    <pre><code>$ echo 'successful success' | grep 'cess$'
 successful suc<strong><em>cess</em></strong></code></pre>
     </td>
   </tr>
@@ -167,13 +160,11 @@ See also: [Anchors](http://www.regular-expressions.info/anchors.html)
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep 'el*s'
-shell
+    <pre><code>$ echo 'shell' | grep 'el*s'
 sh<strong><em>ells</em></strong> fe<strong><em>es</em></strong></code></pre>
     </td>
     <td>
-    <pre><code>$ egrep 'is+'
-hi this hiss
+    <pre><code>$ echo 'hi this hiss' | egrep 'is+'
 hi th<strong><em>is</em></strong> h<strong><em>iss</em></strong></code></pre>
     </td>
   </tr>
@@ -189,8 +180,7 @@ See also: [Repeating character classes](http://www.regular-expressions.info/char
   </tr>
   <tr>
     <td>
-    <pre><code>$ egrep 'colou?r'
-color colour
+    <pre><code>$ echo | 'color colour' egrep 'colou?r'
 <strong><em>color colour</em></strong></pre>
     </td>
   </tr>
@@ -206,13 +196,11 @@ See also: [Repeating character classes](http://www.regular-expressions.info/char
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep 'cat\|dog'
-I like cats and dogs 
+    <pre><code>$ echo 'I like cats and dogs' | grep 'cat\|dog'
 I like <strong><em>cat</em></strong>s and <strong><em>dog</em></strong>s</code></pre>
     </td>
     <td>
-    <pre><code>$ egrep 'to(day|morrow)'
-today or tomorrow
+    <pre><code>$ echo 'today or tomorrow' | egrep 'to(day|morrow)'
 <strong><em>today</em></strong> or <strong><em>tomorrow</em></strong>
     </td>
   </tr>
@@ -234,13 +222,11 @@ The brackets must be escaped in standard regex.
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep 'we\{3\}'
-weee
+    <pre><code>$ echo 'wee' | grep 'we\{3\}'
 <em><strong>weee</em></strong></code></pre>
     </td>
     <td>
-    <pre><code>$ egrep 'ya{2,5}y'
-yaaaay
+    <pre><code>$ echo 'yaaaay' | egrep 'ya{2,5}y'
 <em><strong>yaaaay</em></strong></code></pre>
     </td>
   </tr>
@@ -258,14 +244,12 @@ The parenthesis must be escaped in standard regex
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '\(.*\)\.jpg'
-Image012.jpg
+    <pre><code>$ echo 'Image012.jpg' | grep '\(.*\)\.jpg'
 <em><strong>Image012.jpg</em></strong>
 #Image012 is in capture group 1</code></pre>
     </td>
     <td>
-    <pre><code>$ egrep '(a.)+'
-a1a2a3
+    <pre><code>$ echo 'a1a2a3' | egrep '(a.)+'
 <em><strong>a1a2a3</em></strong></code></pre>
     </td>
   </tr>
@@ -283,18 +267,15 @@ See also: [Grouping](http://www.regular-expressions.info/brackets.html)
   </tr>
   <tr>
     <td>
-    <pre><code>$ grep '\(...\) \1'
-cat cat
+    <pre><code>$ echo 'abc abc' | grep '\(...\) \1
 <em><strong>abc abc</em></strong></code></pre>
     </td>
     <td>
-    <pre><code>$ grep '\(a\(.+\)\)d \1 \2'
-ago ag a OR amend amen men
+    <pre><code>$ echo 'ago ag a OR amend amen men' | grep '\(a\(.+\)\)d \1 \2'
 <em><strong>ago ag a</em></strong> OR <em><strong>amend amen men</em></strong></code></pre>
     </td>
     <td>
-    <pre><code>$ sed 's/"\([^"]*\)"/&lt;\1>/g'
-"head" "body"
+    <pre><code>$ echo '"head" "body"' | sed 's/"\([^"]*\)"/&lt;\1>/g'
 &lt;head> &lt;body></code></pre>
     </td>
   </tr>
