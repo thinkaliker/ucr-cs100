@@ -5,6 +5,8 @@ This is a general overview on regular expressions, commonly shortened to "regex"
 
 This tutorial will cover the basics of regex, but more specifically, **POSIX regex**.
 
+If you would like to practice regex, we have developed a tool for you to use. Check [down below](#practice).
+
 <a name="top"/>
 ##Table of Contents
 [1. What is it?](#what)    
@@ -13,15 +15,23 @@ This tutorial will cover the basics of regex, but more specifically, **POSIX reg
 [4. Escaped literals](#escaped)    
 [5. POSIX specific syntax](#posix)    
 [6. Additional resources](#resources)    
+[7. Regex Practice program](#practice)
 
 <a name="what"/>
 ###What is Regex?
 
 Regex is a short pattern of letters and symbols which has can match certain strings. Depending on the environment these strings are parsed in, you can match multiple instances or a single instance of a pattern. Regular regex returns the **first** matching string that it finds. Regex is most commonly used for searching and replacing string patterns, and while this may not be the only use, it is very powerful because of the syntax behind regex.
 
-Regex in general is used by numerous text editors and progarmming languages including vim, OpenOffice, LibreOffice, NotePad++, Microsoft Word, Eclipse, C++11, Java, Perl, and Python.    
-The Posix regex standard is commonly used for `sed` and `grep`, or searching for and/or replacing strings.    
-The Posix extended regex standard is used by `egrep`, and `sed` with the `-r` flag.
+Regex is commonly used for `sed` and `grep`, or searching for and/or replacing strings.
+
+<table>
+ <tr>
+  <th>Example</th>
+ </tr>
+ <tr>
+  <td><pre><code>echo "test" | grep "e"</code></pre></td>
+ </tr>
+</table>
 
 [Back to table of contents](#top)
 
@@ -33,7 +43,7 @@ Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instan
 ####Example
 `a` will match "c **_a_** t " and "p **_a_** tch" but not "dog"
 
-More info: [Literal Characters](http://www.regular-expressions.info/characters.html)
+See also: [Literal Characters](http://www.regular-expressions.info/characters.html)
 
 [Back to table of contents](#top)
 
@@ -334,4 +344,8 @@ http://www.regular-expressions.info has many pages dedicated to both quickly lea
 
 [Back to table of contents](#top)
 
-----------------------------------
+<a name="practice"/>
+##Regex Practice
+Our practice program is [located here](http://github.com/Liniarc/regexProgram). Instructions for running this practice program is located in that repository.
+
+[Back to table of contents](#top)
