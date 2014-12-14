@@ -24,15 +24,6 @@ Regex is a short pattern of letters and symbols which has can match certain stri
 
 Regex is commonly used for `sed` and `grep`, or searching for and/or replacing strings.
 
-<table>
- <tr>
-  <th>Example</th>
- </tr>
- <tr>
-  <td><pre><code>echo "test" | grep "e"</code></pre></td>
- </tr>
-</table>
-
 [Back to table of contents](#top)
 
 <a name="literal"/>
@@ -41,7 +32,18 @@ Regex is commonly used for `sed` and `grep`, or searching for and/or replacing s
 Any letter or character `a-z`, `A-Z`, `0-9` by itself will match a single instance of that character. There are a few extra symbols which do not follow this rule but we'll get to that in a bit.
 
 ####Example
-`a` will match "c **_a_** t " and "p **_a_** tch" but not "dog"
+<table>
+ <tr>
+  <th>Example</th>
+ </tr>
+ <tr>
+  <td><pre><code>
+  echo "cat patch dog" | grep "e"
+  cat
+  patch
+  </code></pre></td>
+ </tr>
+</table>
 
 See also: [Literal Characters](http://www.regular-expressions.info/characters.html)
 
