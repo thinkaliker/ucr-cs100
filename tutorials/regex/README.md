@@ -19,8 +19,8 @@ This tutorial will cover the basics of regex, but more specifically, **POSIX reg
 
 Regex is a short pattern of letters and symbols which has can match certain strings. Depending on the environment these strings are parsed in, you can match multiple instances or a single instance of a pattern. Regular regex returns the **first** matching string that it finds. Regex is most commonly used for searching and replacing string patterns, and while this may not be the only use, it is very powerful because of the syntax behind regex.
 
-Regex in general is used by numerous text editors and progarmming languages including vim, OpenOffice, LibreOffice, NotePad++, Microsoft Word, Eclipse, C++11, Java, Perl, and Python.
-The Posix regex standard is commonly used for `sed` and `grep`, or searching for and/or replacing strings.
+Regex in general is used by numerous text editors and progarmming languages including vim, OpenOffice, LibreOffice, NotePad++, Microsoft Word, Eclipse, C++11, Java, Perl, and Python.    
+The Posix regex standard is commonly used for `sed` and `grep`, or searching for and/or replacing strings.    
 The Posix extended regex standard is used by `egrep`, and `sed` with the `-r` flag.
 
 [Back to table of contents](#top)
